@@ -33,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  if (store.getters.role) {
+  if (store.getters.username) {
     next();
     return
   }

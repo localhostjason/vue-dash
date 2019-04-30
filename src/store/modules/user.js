@@ -1,18 +1,14 @@
-import {loginByUsername, getUserInfo} from '@/api/auth/login'
-import {
-  getToken, setToken,
-  getUserId, setUserId,
-  removeToken
-} from '@/utils/auth'
+import {login, getUserInfo, logout} from '@/api/auth/login'
+import {getToken, removeToken, setToken} from '@/utils/auth'
+
 
 /***
  * token 用户登陆的token，保存在cookie 中，每次请求 都会带上token
- * user_id 用户ID，保存在cookie 中，获取 个人信息
  * ***/
 const state = {
   token: getToken(),
-  user_id: getUserId(),
   username: null,
+  user_id: null,
   role: null,
 };
 
@@ -37,23 +33,19 @@ const actions = {
     const username = userInfo.username.trim();
     const password = userInfo.password.trim();
 
-    const basic_auth_token = window.btoa(`${username}:${password}`);
-    commit('SET_TOKEN', basic_auth_token);
-
     return new Promise((resolve, reject) => {
-      loginByUsername(username, password).then(response => {
+      login(username, password).then(response => {
+        if (!response.success) {
+          Message.error(response.errmsg);
+          reject('error')
+        }
 
-        const user_index = response._items.findIndex(value => value.username = username);
-        const user_info = response._items[user_index];
-        setUserId(user_info.id);
-        commit('SET_USER_ID', user_info.id);
-
-        commit('SET_TOKEN', basic_auth_token);
-        setToken(basic_auth_token);
+        setToken(response.token);
+        commit('SET_TOKEN', response.token);
 
         resolve()
       }).catch(error => {
-        // 出错 basic auth delete token
+        console.log(error);
         removeToken();
         reject('用户名或者密码不正确')
       })
@@ -61,43 +53,48 @@ const actions = {
   },
 
   getUserInfo({commit, state}) {
-    return new Promise((resolve, reject) => {
-      getUserInfo(state.user_id).then(response => {
-        if (!response) reject('error');
-        if (!response.role) reject('getInfo: 权限不存在');
+    return new Promise(async (resolve, reject) => {
+      const response = await getUserInfo(state.token);
+      if (!response.success) {
+        removeToken();
+        reject(response.errmsg);
+      }
 
-        commit('SET_ROLES', response.role);
-        commit('SET_USERNAME', response.username);
+      const username = response.user.username;
+      if (username !== 'admin' && !response.role) {
+        removeToken();
+        reject('没有role');
+      }
+      commit('SET_USERNAME', response.user.username);
+      commit('SET_USER_ID', response.user.id);
+      commit('SET_ROLE', response.role ? response.role.name : null);
 
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
+
+      resolve(response)
     })
   },
 
   // todo token 验证 提交后台 标记 过期， 现 仅仅 remove token
   logout({commit, state}) {
     return new Promise(resolve => {
-      removeToken();
-      commit('SET_TOKEN', '');
-      commit('SET_USER_ID', '');
-
-      commit('SET_USERNAME', '');
-      commit('SET_ROLES', '');
-
-      resolve()
+      logout(state.token).then(() => {
+        commit('SET_TOKEN', '');
+        commit('SET_USERNAME', '');
+        commit('SET_USER_ID', '');
+        commit('SET_ROLE', null);
+        removeToken();
+        resolve()
+      })
     })
   },
 
   // get user info fail then logout
   fedLogOut({commit}) {
-    removeToken();
     commit('SET_TOKEN', '');
-    commit('SET_USER_ID', '');
-
     commit('SET_USERNAME', '');
-    commit('SET_ROLES', '');
+    commit('SET_USER_ID', '');
+    commit('SET_ROLE', null);
+    removeToken();
   },
 };
 
