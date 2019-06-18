@@ -16,6 +16,13 @@ export function deleteLogs(row) {
   })
 }
 
+export function deleteLogInfo(id) {
+  return request({
+    url: `/log/${id}`,
+    method: 'delete'
+  })
+}
+
 export function updateLog(id, data) {
   return request({
     url: `/log/${id}`,

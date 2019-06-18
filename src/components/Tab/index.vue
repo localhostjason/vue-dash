@@ -3,7 +3,9 @@
     <el-row>
       <div style="width: 200px;" class="pull-left">
         <ul class="vertial-step">
-          <li v-for="(item, index) in tabs" :class="[{ active: hasActive(index) || index === num }, 'step-item']"
+          <!--          <li v-for="(item, index) in tabs" :class="[{ active: hasActive(index) || index === num }, 'step-item']"-->
+          <li v-for="(item, index) in tabs"
+              :class="[{ active: active ? active === item.name : index === num}, 'step-item']"
               @click="tab(item.name, index)" ref="ele">
 
             <div class='step-title'>

@@ -5,11 +5,6 @@ export default {
     logs: '日志',
     securityLog: '安全日志',
     runLog: '运行日志',
-    operateLog: '操作日志',
-
-    system: '系统',
-    export_or_import: '配置导入导出',
-    license: '关于本系统',
 
     userInfo: '个人信息',
   },

@@ -58,7 +58,7 @@
           description: null,
         },
         baseRules: {
-          nickname: {required: true, message: '请输入用户昵称', trigger: ['blur', 'change']},
+          nickname: {required: true, message: '请输入用户昵称', trigger: ['blur']},
         }
       }
     },

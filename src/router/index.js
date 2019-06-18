@@ -8,7 +8,6 @@ import Layout from '@/components/Layout'
 
 /* Router Modules */
 import LogRouter from './modules/logs'
-import systemRouter from './modules/system'
 import userRouter from './modules/user'
 
 
@@ -94,7 +93,6 @@ export const asyncRoutes = [
     ]
   },
   LogRouter,
-  systemRouter,
   {
     path: '*',
     redirect: '/404',

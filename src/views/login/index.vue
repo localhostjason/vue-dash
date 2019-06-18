@@ -4,7 +4,7 @@
              label-position="left" size="medium">
       <div class="title-container">
         <h3 class="title">
-          <span>iGuard6</span>
+          <span>Demo</span>
           <span class="text-explode">|</span>
           <span>{{ $t('login.title') }}</span>
         </h3>
@@ -55,7 +55,7 @@
       return {
         loginForm: {
           username: 'admin',
-          password: 'iguard'
+          password: '123'
         },
         loginRules: {
           username: [{required: true, trigger: 'blur', validator: validateUsername}],
@@ -96,15 +96,18 @@
           if (!valid) return;
 
           this.loading = true;
-          await this.$store.dispatch('user/login', this.loginForm);
-          this.loading = false;
-          await this.$router.push({path: this.redirect || '/'});
+          try {
+            await this.$store.dispatch('user/login', this.loginForm);
+            this.loading = false;
+            this.$router.push({path: this.redirect || '/'});
 
-          this.$notify.success({
-            title: '登录成功',
-            message: '欢迎您进入iGuard6管理系统',
-          });
-
+            this.$notify.success({
+              title: '登录成功',
+              message: '欢迎您进入管理系统',
+            });
+          } catch (e) {
+            this.loading = false;
+          }
         })
       }
     }
@@ -120,6 +123,7 @@
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
     .login-container .el-input input {
       color: $cursor;
+
       &::first-line {
         color: $light_gray;
       }
@@ -132,6 +136,7 @@
       display: inline-block;
       height: 47px;
       width: 85%;
+
       input {
         background: transparent;
         border: 0;
@@ -141,12 +146,14 @@
         color: $light_gray;
         height: 47px;
         caret-color: $cursor;
+
         &:-webkit-autofill {
           -webkit-box-shadow: 0 0 0 1000px $bg inset !important;
           -webkit-text-fill-color: $cursor !important;
         }
       }
     }
+
     .el-form-item {
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(0, 0, 0, 0.1);
@@ -166,6 +173,7 @@
     height: 100%;
     width: 100%;
     background-color: $bg;
+
     .login-form {
       position: absolute;
       left: 0;
@@ -182,12 +190,15 @@
       vertical-align: middle;
       width: 30px;
       display: inline-block;
+
       .svg-icon {
         font-size: 20px;
       }
     }
+
     .title-container {
       position: relative;
+
       .title {
         font-size: 26px;
         color: $light_gray;
@@ -195,6 +206,7 @@
         text-align: center;
         font-weight: bold;
       }
+
       .set-language {
         color: #fff;
         position: absolute;
@@ -202,6 +214,7 @@
         right: 0;
       }
     }
+
     .show-pwd {
       position: absolute;
       right: 10px;

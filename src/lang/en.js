@@ -5,11 +5,6 @@ export default {
     logs: 'Logs',
     securityLog: 'SecurityLog',
     runLog: 'RunLog',
-    operateLog: 'OperateLog',
-
-    system: 'System',
-    export_or_import: 'ExportOrImport',
-    license: 'License',
 
     userInfo: 'UserInfo',
   },

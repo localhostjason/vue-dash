@@ -27,15 +27,6 @@ const logsRouter = {
         title: 'runLog',
         icon: 'international'
       }
-    },
-    {
-      path: 'operate',
-      component: () => import('@/views/logs/operate'),
-      name: 'OperateLog',
-      meta: {
-        title: 'operateLog',
-        icon: 'grid-four-up'
-      }
     }
   ]
 };

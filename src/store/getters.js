@@ -10,6 +10,9 @@ const getters = {
   userId: state => state.user.user_id,
   role: state => state.user.role,
 
+  tabActiveModule: state => state.tab.tab_active_module,
+
+
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
 

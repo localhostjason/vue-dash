@@ -40,16 +40,12 @@ router.beforeEach(async (to, from, next) => {
 
   try {
     const user_info = await store.dispatch('user/getUserInfo');
-    const role = user_info.role; //such as: 'admin'
+    const role = user_info.role;
     const username = user_info.username;
-    // generate accessible routes map based on roles
-    const accessRoutes = await store.dispatch('permission/generateRoutes', {role, username});
 
+    const accessRoutes = await store.dispatch('permission/generateRoutes', {role, username});
     // dynamically add accessible routes
     router.$addRoutes(accessRoutes);
-
-    // hack method to ensure that addRoutes is complete
-    // set the replace: true, so the navigation will not leave a history record
     next({...to, replace: true})
   } catch (error) {
     // remove token and go to login page to re-login
