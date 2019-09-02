@@ -7,7 +7,6 @@ Vue.use(Router);
 import Layout from '@/components/Layout'
 
 /* Router Modules */
-import LogRouter from './modules/logs'
 import userRouter from './modules/user'
 
 
@@ -84,21 +83,19 @@ export const asyncRoutes = [
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
         meta: {
-          title: 'dashboard',
-          icon: 'dashboard',
+          title: '概览',
+          icon: 'home',
           noCache: true,
           affix: true
         }
       }
     ]
   },
-  LogRouter,
   {
     path: '*',
     redirect: '/404',
     hidden: true
   },
-
   ...userRouter,
 ];
 

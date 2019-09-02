@@ -4,23 +4,23 @@
              label-position="left" size="medium">
       <div class="title-container">
         <h3 class="title">
-          <span>Demo</span>
+          <span>博闻ERP</span>
           <span class="text-explode">|</span>
-          <span>{{ $t('login.title') }}</span>
+          <span>管理系统</span>
         </h3>
         <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container"><svg-icon icon-class="user"/></span>
-        <el-input v-model="loginForm.username" :autofocus="isAutoFocus" :placeholder="$t('login.username')"
+        <el-input v-model="loginForm.username" :autofocus="isAutoFocus" placeholder="请输入用户名"
                   name="username" type="text"
                   auto-complete="on" size="medium"></el-input>
       </el-form-item>
 
       <el-form-item prop="password">
         <span class="svg-container"><svg-icon icon-class="password"/></span>
-        <el-input :type="passwordType" v-model="loginForm.password" :placeholder="$t('login.password')" name="password"
+        <el-input :type="passwordType" v-model="loginForm.password" placeholder="请输入密码" name="password"
                   auto-complete="on" @keyup.enter.native="handleLogin" size="medium"></el-input>
         <span class="show-pwd" @click="showPwd">
           <svg-icon icon-class="eye"/>
@@ -28,7 +28,7 @@
       </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                 @click.native.prevent="handleLogin" size="medium">{{ $t('login.logIn') }}
+                 @click.native.prevent="handleLogin" size="medium">登录
       </el-button>
     </el-form>
   </div>
@@ -37,14 +37,13 @@
 
 <script>
   import LangSelect from '@/components/LangSelect'
-  import {trans} from '@/utils/i18n'
 
   const validateUsername = (rule, value, callback) => {
-    let error = new Error(trans('login', 'validate_username'));
+    let error = new Error('请输入用户名');
     !value ? callback(error) : callback();
   };
   const validatePassword = (rule, value, callback) => {
-    if (!value) callback(new Error(trans('login', 'validate_password')));
+    if (!value) callback(new Error('请输入密码'));
     callback();
   };
 
@@ -95,15 +94,15 @@
         this.$refs.loginForm.validate(async valid => {
           if (!valid) return;
 
-          this.loading = true;
           try {
+            this.loading = true;
             await this.$store.dispatch('user/login', this.loginForm);
             this.loading = false;
-            this.$router.push({path: this.redirect || '/'});
+            await this.$router.push({path: this.redirect || '/'});
 
             this.$notify.success({
               title: '登录成功',
-              message: '欢迎您进入管理系统',
+              message: '欢迎您进入瑞士餐厅管理系统',
             });
           } catch (e) {
             this.loading = false;
@@ -123,7 +122,6 @@
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
     .login-container .el-input input {
       color: $cursor;
-
       &::first-line {
         color: $light_gray;
       }
@@ -136,7 +134,6 @@
       display: inline-block;
       height: 47px;
       width: 85%;
-
       input {
         background: transparent;
         border: 0;
@@ -146,14 +143,12 @@
         color: $light_gray;
         height: 47px;
         caret-color: $cursor;
-
         &:-webkit-autofill {
           -webkit-box-shadow: 0 0 0 1000px $bg inset !important;
           -webkit-text-fill-color: $cursor !important;
         }
       }
     }
-
     .el-form-item {
       border: 1px solid rgba(255, 255, 255, 0.1);
       background: rgba(0, 0, 0, 0.1);
@@ -173,7 +168,6 @@
     height: 100%;
     width: 100%;
     background-color: $bg;
-
     .login-form {
       position: absolute;
       left: 0;
@@ -190,15 +184,12 @@
       vertical-align: middle;
       width: 30px;
       display: inline-block;
-
       .svg-icon {
         font-size: 20px;
       }
     }
-
     .title-container {
       position: relative;
-
       .title {
         font-size: 26px;
         color: $light_gray;
@@ -206,7 +197,6 @@
         text-align: center;
         font-weight: bold;
       }
-
       .set-language {
         color: #fff;
         position: absolute;
@@ -214,7 +204,6 @@
         right: 0;
       }
     }
-
     .show-pwd {
       position: absolute;
       right: 10px;

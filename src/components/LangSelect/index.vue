@@ -5,7 +5,8 @@
     </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item :disabled="language==='zh'" command="zh">中文</el-dropdown-item>
-      <el-dropdown-item :disabled="language==='en'" command="en">English</el-dropdown-item>
+      <el-dropdown-item :disabled="language==='en'" command="en">英文</el-dropdown-item>
+      <el-dropdown-item :disabled="language==='gm'" command="gm">德文</el-dropdown-item>
     </el-dropdown-menu>
   </el-dropdown>
 </template>
@@ -19,12 +20,9 @@
     },
     methods: {
       handleSetLanguage(lang) {
-        this.$i18n.locale = lang;
         this.$store.dispatch('app/setLanguage', lang);
-        this.$message({
-          message: this.$t('messages.change_language'),
-          type: 'success'
-        })
+        this.$message.success('切换语言版本成功');
+        location.reload();
       }
     }
   }

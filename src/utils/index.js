@@ -151,3 +151,46 @@ export function getEnumName(value) {
 
   return result[value] || ''
 }
+
+
+export function deepClone(source) {
+  if (!source && typeof source !== 'object') {
+    throw new Error('error arguments', 'deepClone')
+  }
+  const targetObj = source.constructor === Array ? [] : {};
+  Object.keys(source).forEach(keys => {
+    if (source[keys] && typeof source[keys] === 'object') {
+      targetObj[keys] = deepClone(source[keys])
+    } else {
+      targetObj[keys] = source[keys]
+    }
+  });
+  return targetObj
+}
+
+
+export const pickerOptions2 = {
+  disabledDate(time) {
+    return time.getTime() > Date.now();
+  },
+  shortcuts: [{
+    text: '今天',
+    onClick(picker) {
+      picker.$emit('pick', new Date());
+    }
+  }, {
+    text: '昨天',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24);
+      picker.$emit('pick', date);
+    }
+  }, {
+    text: '一周前',
+    onClick(picker) {
+      const date = new Date();
+      date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+      picker.$emit('pick', date);
+    }
+  }]
+}

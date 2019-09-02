@@ -12,10 +12,11 @@ export function login(username, password) {
   })
 }
 
-export function getUserInfo() {
+export function getUserInfo(token) {
   return request({
     url: `/admin/user_info`,
-    method: 'get'
+    method: 'get',
+    params: {token}
   })
 }
 
@@ -28,9 +29,10 @@ export function updateUserInfo(uid, data) {
 }
 
 
-export function logout() {
+export function logout(token) {
   return request({
     url: `/admin/logout`,
-    method: 'post'
+    method: 'post',
+    data: {token}
   })
 }

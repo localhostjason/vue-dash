@@ -12,15 +12,13 @@ import App from './App'
 import router from './router'
 import store from './store'
 
-import i18n from './lang'
 import './icons'
 import './permission'
 
 import * as filters from './filters'
 
 Vue.use(Element, {
-  size: 'small',
-  i18n: (key, value) => i18n.t(key, value)
+  size: 'small'
 });
 
 Object.keys(filters).forEach(key => {
@@ -43,6 +41,5 @@ new Vue({
   el: '#app',
   router,
   store,
-  i18n,
   render: h => h(App)
 });

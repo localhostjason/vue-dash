@@ -1,6 +1,8 @@
 import axios from 'axios'
 import {Message, MessageBox} from 'element-ui'
 import store from '@/store'
+import {getToken} from '@/utils/auth'
+import router from "@/router";
 
 const defaultHeaders = {
   Accept: 'application/json, text/plain, */*; charset=utf-8',
@@ -11,11 +13,13 @@ const defaultHeaders = {
 
 Object.assign(axios.defaults.headers.common, defaultHeaders);
 
+// create an axios instance
 const service = axios.create({
-  baseURL: process.env.BASE_API,
-  timeout: 5000
+  baseURL: process.env.VUE_APP_BASE_API, // api的base_url
+  timeout: 5000 // request timeout
 });
 
+// request interceptor
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
@@ -25,31 +29,41 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    console.log('demo_error', error);
     Promise.reject(error)
   }
 );
 
+// response interceptor
 service.interceptors.response.use(
-  // todo mock js response
-  // response => response.data,
+  response => response.data,
 
-  // 真实的 后台 response
-  response => {
-    return response.data
-  },
   error => {
-    const resp = error.response ? error.response.data._error.message : error;
+    let resp = error.response.data;
+    let message, code;
+    try {
+      message = resp._error.message;
+      code = resp._error.code;
+    } catch (e) {
+      message = '提交参数类型不对';
+    }
+
     Message({
-      message: `错误：${resp}`,
+      message: `错误：${message}`,
       type: 'error',
       duration: 3 * 1000
     });
     try {
       MessageBox.close();
     } catch (e) {
-      console.log(e)
+
     }
+
+    if (code === 401) {
+      store.dispatch('user/fedLogOut').then(() => {
+        router.push({path: '/'})
+      });
+    }
+
     return Promise.reject(error)
   }
 );

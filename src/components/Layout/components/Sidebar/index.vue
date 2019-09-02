@@ -4,7 +4,7 @@
 
       <!--<i class="fa fa-skyatlas" :style="'color: white;'{isCollapse ? 'font-size: 40px;padding: 0 10px': ''}"></i>-->
       <i :class="[!isCollapse ? 'show_log' : 'hide_log', 'fa', 'fa-skyatlas']"></i>
-      <span v-show="!isCollapse">iGuard</span>
+      <span v-show="!isCollapse">博闻ERP</span>
 
     </div>
 
@@ -56,7 +56,7 @@
   .hide_log {
     font-size: 20px;
     position: relative;
-    right: 4px;
+    right: -3px;
     color: #ffffff;
     top: 10px;
   }

@@ -4,12 +4,14 @@ import {asyncRoutes, constantRoutes} from '@/router'
  * 通过meta.roles  判断是否与当前用户权限匹配
  * 如果 用户的role 在菜单的roles 返回 True，否者返回False
  * 但是 如果不带 role，返回True
- * @param role
+ * @param routes_map
  * @param route
  */
-function hasPermission(role, route) {
-  if (route.meta && route.meta.roles) {
-    return route.meta.roles.includes(role)
+function hasPermission(routes_map, route) {
+  if (route.path) {
+    console.log(routes_map, route.path, routes_map.some(val => val.includes(route.path)));
+    // return routes_map.includes(route.path)
+    return routes_map.some(val => val.includes(route.path))
   } else {
     return true
   }
@@ -19,16 +21,16 @@ function hasPermission(role, route) {
  * 递归过滤异步路由表，返回符合用户角色权限的路由表
  * 从all 的路由数据 ，刷选出满足用户 hasPermission 的路由
  * @param routes
- * @param role
+ * @param routes_map
  */
-function filterAsyncRouter(routes, role) {
+export function filterAsyncRoutes(routes, routes_map) {
   const res = [];
 
   routes.forEach(route => {
     const tmp = {...route};
-    if (hasPermission(role, tmp)) {
+    if (hasPermission(routes_map, tmp)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRouter(tmp.children, role)
+        tmp.children = filterAsyncRoutes(tmp.children, routes_map)
       }
       res.push(tmp)
     }
@@ -57,10 +59,10 @@ const mutations = {
 const actions = {
   generateRoutes({commit}, data) {
     return new Promise(resolve => {
-      const {role, username} = data;
+      const {routes_map, username} = data;
       let accessedRoutes = username === 'admin' ?
         asyncRoutes :
-        filterAsyncRouter(asyncRoutes, role);
+        filterAsyncRoutes(asyncRoutes, [...routes_map, '*']);
 
       commit('SET_ROUTERS', accessedRoutes);
       resolve(accessedRoutes)

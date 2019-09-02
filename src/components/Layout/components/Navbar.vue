@@ -13,7 +13,7 @@
 
           <screenfull id="screenfull" class="right-menu-item hover-effect"></screenfull>
 
-          <lang-select class="international right-menu-item hover-effect"></lang-select>
+
         </template>
 
         <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -23,19 +23,13 @@
           </div>
           <el-dropdown-menu slot="dropdown">
             <router-link to="/user/info">
-              <el-dropdown-item>
-                {{ $t('navbar.userInfo') }}
-              </el-dropdown-item>
+              <el-dropdown-item>个人信息</el-dropdown-item>
             </router-link>
             <span @click="changePassword">
-              <el-dropdown-item>
-                {{ $t('navbar.changePassword') }}
-              </el-dropdown-item>
+              <el-dropdown-item>修改密码</el-dropdown-item>
             </span>
             <span @click="logout">
-              <el-dropdown-item divided>
-              {{ $t('navbar.logOut') }}
-              </el-dropdown-item>
+              <el-dropdown-item divided>退出登录</el-dropdown-item>
             </span>
           </el-dropdown-menu>
         </el-dropdown>
@@ -55,6 +49,12 @@
   import Search from '@/components/HeaderSearch'
   import Screenfull from '@/components/Screenfull'
 
+  const language_type = {
+    zh: '中文',
+    en: '英文',
+    gm: '德语'
+  };
+
   export default {
     components: {
       Hamburger,
@@ -69,8 +69,14 @@
         'sidebar',
         'username',
         'device',
-        'role'
+        'role',
+        'language'
       ])
+    },
+    data() {
+      return {
+        language_type
+      }
     },
     methods: {
       toggleSideBar() {
@@ -78,7 +84,6 @@
       },
       async logout() {
         await this.$store.dispatch('user/logout');
-        await this.$store.dispatch('license/setIsAlerted', false);
 
         this.$router.push(`/login?redirect=${this.$route.fullPath}`);
         this.$message.success('退出登录成功');

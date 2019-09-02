@@ -10,7 +10,7 @@ const userRouter = [{
       component: () => import('@/views/userInfo'),
       name: 'SelfUserInfo',
       meta: {
-        title: 'userInfo',
+        title: '用户信息',
         icon: 'cloud-download',
       }
     }
