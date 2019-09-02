@@ -8,7 +8,6 @@
           <span class="text-explode">|</span>
           <span>管理系统</span>
         </h3>
-        <lang-select class="set-language"/>
       </div>
 
       <el-form-item prop="username">
@@ -36,20 +35,9 @@
 </template>
 
 <script>
-  import LangSelect from '@/components/LangSelect'
-
-  const validateUsername = (rule, value, callback) => {
-    let error = new Error('请输入用户名');
-    !value ? callback(error) : callback();
-  };
-  const validatePassword = (rule, value, callback) => {
-    if (!value) callback(new Error('请输入密码'));
-    callback();
-  };
 
   export default {
     name: 'Login',
-    components: {LangSelect},
     data() {
       return {
         loginForm: {
@@ -57,8 +45,8 @@
           password: '123'
         },
         loginRules: {
-          username: [{required: true, trigger: 'blur', validator: validateUsername}],
-          password: [{required: true, trigger: 'blur', validator: validatePassword}]
+          username: [{required: true, trigger: 'blur', message: '请输入用户名'}],
+          password: [{required: true, trigger: 'blur', message: '请输入密码'}]
         },
         passwordType: 'password',
         loading: false,

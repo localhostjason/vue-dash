@@ -44,21 +44,13 @@
   import {mapGetters} from 'vuex'
   import Hamburger from '@/components/Hamburger'
   import Breadcrumb from '@/components/Breadcrumb'
-  import LangSelect from '@/components/LangSelect'
   import ChangePasswordDialog from './Dialog/ChangePasswordDialog'
   import Search from '@/components/HeaderSearch'
   import Screenfull from '@/components/Screenfull'
 
-  const language_type = {
-    zh: '中文',
-    en: '英文',
-    gm: '德语'
-  };
-
   export default {
     components: {
       Hamburger,
-      LangSelect,
       ChangePasswordDialog,
       Breadcrumb,
       Search,
@@ -75,7 +67,6 @@
     },
     data() {
       return {
-        language_type
       }
     },
     methods: {

@@ -40,11 +40,12 @@ router.beforeEach(async (to, from, next) => {
 
   try {
     const user_info = await store.dispatch('user/getUserInfo');
-    const username = user_info.user.username;
+    const username = user_info.username;
+    const role = user_info.role;
     // generate accessible routes map based on roles
     const accessRoutes = await store.dispatch('permission/generateRoutes',
       {
-        routes_map: user_info.role ? JSON.parse(user_info.role.routes_map || '[]') : [],
+        role: role || [],
         username
       });
 

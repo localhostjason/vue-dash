@@ -16,7 +16,7 @@ export function getUserInfo(token) {
   return request({
     url: `/admin/user_info`,
     method: 'get',
-    params: {token}
+    // params: {token}
   })
 }
 
@@ -33,6 +33,6 @@ export function logout(token) {
   return request({
     url: `/admin/logout`,
     method: 'post',
-    data: {token}
+    // data: {token}
   })
 }

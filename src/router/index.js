@@ -85,7 +85,6 @@ export const asyncRoutes = [
         meta: {
           title: '概览',
           icon: 'home',
-          noCache: true,
           affix: true
         }
       }

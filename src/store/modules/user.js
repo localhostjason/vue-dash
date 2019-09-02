@@ -1,11 +1,6 @@
 import {login, getUserInfo, logout} from '@/api/auth/login'
 import {getToken, removeToken, setToken} from '@/utils/auth'
-import {Message} from 'element-ui'
 
-
-/***
- * token 用户登陆的token，保存在cookie 中，每次请求 都会带上token
- * ***/
 const state = {
   token: getToken(),
   username: null,
@@ -36,18 +31,12 @@ const actions = {
 
     return new Promise((resolve, reject) => {
       login(username, password).then(response => {
-        if (!response.success) {
-          Message.error(response.errmsg);
-          reject('error');
-          return
-        }
-
         setToken(response.token);
         commit('SET_TOKEN', response.token);
 
         resolve()
       }).catch(error => {
-        console.log(error);
+        console.log('r', error);
         removeToken();
         reject('用户名或者密码不正确')
       })
@@ -58,18 +47,14 @@ const actions = {
     return new Promise(async (resolve, reject) => {
       if (!state.token) return;
       const response = await getUserInfo(state.token);
-      if (!response.success) {
-        removeToken();
-        reject(response.errmsg);
-      }
 
-      const username = response.user.username;
+      const username = response.username;
       if (username !== 'admin' && !response.role) {
         removeToken();
         reject('没有role');
       }
-      commit('SET_USERNAME', response.user.username);
-      commit('SET_USER_ID', response.user.id);
+      commit('SET_USERNAME', response.username);
+      commit('SET_USER_ID', response.id);
       commit('SET_ROLE', response.role ? response.role.name : null);
 
 
@@ -77,7 +62,6 @@ const actions = {
     })
   },
 
-  // todo token 验证 提交后台 标记 过期， 现 仅仅 remove token
   logout({commit, state}) {
     return new Promise(resolve => {
       logout(state.token).then(() => {
