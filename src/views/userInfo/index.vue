@@ -11,17 +11,8 @@
             <el-form-item label="账号名:">
               <span>{{userInfo.username}}</span>
             </el-form-item>
-            <el-form-item label="用户名:" prop="nickname">
-              <el-input v-model="baseForm.nickname" placeholder="请输入用户昵称"></el-input>
-            </el-form-item>
-            <el-form-item label="权限:">
-              <span>{{getEnumName(userInfo.role)}}</span>
-            </el-form-item>
-            <el-form-item label="租户名:" v-if="userInfo.role === 'webmaster'">
-              <span>{{userInfo.tenant_name}}</span>
-            </el-form-item>
             <el-form-item label="描述:" prop="description">
-              <el-input type="textarea" v-model="baseForm.description" :autosize="{ minRows: 4}"></el-input>
+              <el-input type="textarea" v-model="baseForm.desc" :autosize="{ minRows: 4}"></el-input>
             </el-form-item>
           </el-form>
         </fieldset>
@@ -54,23 +45,20 @@
       return {
         userInfo: {},
         baseForm: {
-          nickname: null,
-          description: null,
+          desc: null,
         },
         baseRules: {
-          nickname: {required: true, message: '请输入用户昵称', trigger: ['blur']},
+          // nickname: {required: true, message: '请输入用户昵称', trigger: ['blur', 'change']},
         }
       }
     },
     created() {
-      this.getUserInfo(this.$store.state.user.user_id);
+      this.getUserInfo(this.$store.getters.userId);
     },
     methods: {
       getEnumName,
       getUserInfo(user_id) {
-        const asUser_id = this.$store.state.user.asUser_id;
-        // alert(asUser_id);
-        this.getUser(asUser_id || user_id).then(response => {
+        this.getUser(user_id).then(response => {
           this.userInfo = response;
           this.baseForm = _.pick(response, Object.keys(this.baseForm));
         })

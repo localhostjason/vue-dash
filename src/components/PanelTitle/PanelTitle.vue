@@ -1,13 +1,16 @@
 <template>
-  <div class="console-title clearfix" style="min-height: 50px;" :class="isLine? ['bline', 'margin-bottom-10']:''">
-    <div class="pull-left">
-      <h4>{{title}}</h4>
-      <el-button size="mini" class="btn-small" v-if="isShowHistory" @click="goHistory">
-        <span class="icon-toinstlist"></span>
-        <span>{{reTitle}}</span>
-      </el-button>
+  <el-row>
+    <div class="console-title clearfix" style="min-height: 50px;" :class="isLine? 'bline':''">
+      <div class="pull-left">
+        <h4>{{title}}</h4>
+        <el-button size="mini" class="btn-small" v-if="isShowHistory" @click="goHistory">
+          <span class="icon-toinstlist"></span>
+          <span>{{reTitle}}</span>
+        </el-button>
+      </div>
     </div>
-  </div>
+  </el-row>
+
 </template>
 
 <script>
@@ -20,8 +23,8 @@
         default: 'title'
       },
       isLine: {
-        type: Boolean,
-        default: true
+        type: [Boolean, String],
+        default: false
       },
       isShowHistory: {
         type: Boolean,
@@ -37,7 +40,8 @@
       },
       routerObj: {
         type: Object,
-        default: () => {}
+        default: () => {
+        }
       }
     },
     methods: {

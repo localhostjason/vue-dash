@@ -33,6 +33,13 @@ export function deleteUser(uid) {
   })
 }
 
+export function deleteUsers(params) {
+  return request({
+    url: `/user?where=${JSON.stringify(params)}`,
+    method: 'delete',
+  })
+}
+
 export function updateUser(uid, data) {
   return request({
     url: `/user/${uid}`,

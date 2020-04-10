@@ -1,3 +1,3 @@
 module.exports = {
-  title: 'iGuard6',
+  title: '博闻ERP',
 };

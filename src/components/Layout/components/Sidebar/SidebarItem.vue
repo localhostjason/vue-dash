@@ -6,7 +6,7 @@
       <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
         <svg-icon v-if="onlyOneChild.meta&&onlyOneChild.meta.icon" :icon-class="onlyOneChild.meta.icon"/>
         <i v-if="item.meta&&item.meta.fontIcon" :class="[item.meta.fontIcon, 'font_icon']"></i>
-        <span v-if="onlyOneChild.meta&&onlyOneChild.meta.title" slot="title">{{ generateTitle(onlyOneChild.meta.title) }}</span>
+        <span v-if="onlyOneChild.meta&&onlyOneChild.meta.title" slot="title">{{ onlyOneChild.meta.title }}</span>
       </el-menu-item>
     </router-link>
 
@@ -14,7 +14,7 @@
       <template slot="title">
         <svg-icon v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"/>
         <i v-if="item.meta&&item.meta.fontIcon" :class="[item.meta.fontIcon, 'font_icon']"></i>
-        <span v-if="item.meta&&item.meta.title" slot="title">{{ generateTitle(item.meta.title) }}</span>
+        <span v-if="item.meta&&item.meta.title" slot="title">{{ item.meta.title }}</span>
       </template>
 
       <template v-for="child in item.children" v-if="!child.hidden">
@@ -25,7 +25,7 @@
           <el-menu-item :index="resolvePath(child.path)">
             <svg-icon v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"/>
             <i v-if="item.meta&&item.meta.fontIcon" :class="[item.meta.fontIcon, 'font_icon']"></i>
-            <span v-if="child.meta&&child.meta.title" slot="title">{{ generateTitle(child.meta.title) }}</span>
+            <span v-if="child.meta&&child.meta.title" slot="title">{{ child.meta.title }}</span>
           </el-menu-item>
         </router-link>
       </template>
@@ -36,7 +36,6 @@
 
 <script>
   import path from 'path'
-  import {generateTitle} from '@/utils/i18n'
 
   export default {
     name: 'SidebarItem',
@@ -77,7 +76,6 @@
       resolvePath(...paths) {
         return path.resolve(this.basePath, ...paths)
       },
-      generateTitle
     }
   }
 </script>
