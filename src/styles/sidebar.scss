@@ -73,8 +73,22 @@
       }
     }
 
-    .is-active>.el-submenu__title {
+    .is-active > .el-submenu__title {
       color: $subMenuActiveText !important;
+      background: -webkit-linear-gradient(left, #294574, #2e3c60); /* Safari 5.1 - 6.0 */
+      background: -o-linear-gradient(right, #294574, #2e3c60); /* Opera 11.1 - 12.0 */
+      background: -moz-linear-gradient(right, #294574, #2e3c60); /* Firefox 3.6 - 15 */
+      background: linear-gradient(to right, #294574, #2e3c60); /* 标准的语法 */
+
+      &:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 25%;
+        width: 3px;
+        height: 50%;
+        background: #4385f5;
+      }
     }
 
     & .nest-menu .el-submenu>.el-submenu__title,
