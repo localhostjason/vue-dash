@@ -86,7 +86,7 @@
         this.dialog.visible = true;
 
         this.fileList = row.map(value => {
-          this.$set(value, 'url', process.env.VUE_APP_FILE_API + value.img_url);
+          this.$set(value, 'url', process.env.VUE_APP_BASE_API + value.img_url);
           return value
         });
         console.log(this.fileList);

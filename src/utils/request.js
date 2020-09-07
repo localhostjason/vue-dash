@@ -38,13 +38,36 @@ service.interceptors.response.use(
   response => response.data,
 
   error => {
-    let resp = error.response.data;
-    let message, code;
+    let status = 0;
     try {
-      message = resp._error.message;
-      code = resp._error.code;
+      status = error.response.status;
     } catch (e) {
-      message = '提交参数类型不对';
+      Message({
+        message: '连接不上后台。已超时',
+        type: 'error',
+        duration: 3 * 1000
+      });
+      return Promise.reject('连接不上后台。已超时')
+    }
+
+    const errMsg = error.response.data.errmsg;
+    let message;
+    switch (status) {
+      case 422:
+        message = errMsg;
+        break;
+
+      case 403:
+        message = '权限不足';
+        break;
+
+      case 404:
+        message = '相关的资源不存在';
+        break;
+
+      default:
+        message = '服务器错误'
+
     }
 
     Message({
@@ -52,13 +75,8 @@ service.interceptors.response.use(
       type: 'error',
       duration: 3 * 1000
     });
-    try {
-      MessageBox.close();
-    } catch (e) {
 
-    }
-
-    if (code === 401) {
+    if (status === 401) {
       store.dispatch('user/fedLogOut').then(() => {
         router.push({path: '/'})
       });
