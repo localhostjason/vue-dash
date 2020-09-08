@@ -28,10 +28,9 @@ export function updateUserInfo(uid, data) {
 }
 
 
-export function logout(token) {
+export function logout() {
   return request({
-    url: `/admin/logout`,
+    url: `/user/logout`,
     method: 'post',
-    // data: {token}
   })
 }

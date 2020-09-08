@@ -69,7 +69,7 @@ service.interceptors.response.use(
         break;
 
       case 401:
-        message = '登录密码不对，已失效';
+        message = errMsg;
         break;
 
       default:
