@@ -6,17 +6,16 @@ export function login(username, password) {
     password
   };
   return request({
-    url: '/admin/login',
+    url: '/auth/login',
     method: 'post',
     data
   })
 }
 
-export function getUserInfo(token) {
+export function getUserInfo() {
   return request({
-    url: `/admin/user_info`,
+    url: `/user/info`,
     method: 'get',
-    // params: {token}
   })
 }
 

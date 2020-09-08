@@ -5,11 +5,11 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const port = 9527; // dev port
+const port = 8081; // dev port
 
 
 module.exports = {
-  publicPath: '/admin', // 部署应用时的根路径(默认'/'),也可用相对路径(存在使用限制)
+  publicPath: '/static', // 部署应用时的根路径(默认'/'),也可用相对路径(存在使用限制)
   outputDir: 'dist', // 运行时生成的生产环境构建文件的目录(默认''dist''，构建之前会被清除)
   assetsDir: 'lib', //放置生成的静态资源(s、css、img、fonts)的(相对于 outputDir 的)目录(默认'')
   lintOnSave: process.env.NODE_ENV === 'development', // 是否在保存的时候检查

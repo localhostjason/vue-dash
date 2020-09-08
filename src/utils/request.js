@@ -1,7 +1,6 @@
 import axios from 'axios'
-import {Message, MessageBox} from 'element-ui'
+import {Message} from 'element-ui'
 import store from '@/store'
-import {getToken} from '@/utils/auth'
 import router from "@/router";
 
 const defaultHeaders = {
@@ -50,10 +49,14 @@ service.interceptors.response.use(
       return Promise.reject('连接不上后台。已超时')
     }
 
-    const errMsg = error.response.data.errmsg;
+    const errMsg = error.response.data.msg;
     let message;
     switch (status) {
       case 422:
+        message = errMsg;
+        break;
+
+      case 400:
         message = errMsg;
         break;
 
@@ -65,13 +68,17 @@ service.interceptors.response.use(
         message = '相关的资源不存在';
         break;
 
+      case 401:
+        message = '登录密码不对，已失效';
+        break;
+
       default:
         message = '服务器错误'
 
     }
 
     Message({
-      message: `错误：${message}`,
+      message: `${message}`,
       type: 'error',
       duration: 3 * 1000
     });

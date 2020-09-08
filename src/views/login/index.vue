@@ -4,7 +4,7 @@
              label-position="left" size="medium">
       <div class="title-container">
         <h3 class="title">
-          <span>博闻ERP</span>
+          <span>iFlow2</span>
           <span class="text-explode">|</span>
           <span>管理系统</span>
         </h3>

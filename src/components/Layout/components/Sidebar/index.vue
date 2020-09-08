@@ -4,7 +4,7 @@
 
       <!--<i class="fa fa-skyatlas" :style="'color: white;'{isCollapse ? 'font-size: 40px;padding: 0 10px': ''}"></i>-->
       <i :class="[!isCollapse ? 'show_log' : 'hide_log', 'fa', 'fa-skyatlas']"></i>
-      <span v-show="!isCollapse">博闻ERP</span>
+      <span v-show="!isCollapse">iFlow2</span>
 
     </div>
 

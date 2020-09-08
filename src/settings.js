@@ -1,3 +1,3 @@
 module.exports = {
-  title: '博闻ERP',
+  title: 'iFlow2',
 };
