@@ -12,7 +12,7 @@
               <span>{{userInfo.username}}</span>
             </el-form-item>
             <el-form-item label="描述:" prop="description">
-              <el-input type="textarea" v-model="baseForm.desc" :autosize="{ minRows: 4}"></el-input>
+              <el-input type="textarea" v-model="baseForm.description" :autosize="{ minRows: 4}"></el-input>
             </el-form-item>
           </el-form>
         </fieldset>
@@ -46,7 +46,7 @@
       return {
         userInfo: {},
         baseForm: {
-          desc: null,
+          description: null,
         },
         baseRules: {
           // nickname: {required: true, message: '请输入用户昵称', trigger: ['blur', 'change']},

@@ -43,7 +43,7 @@ export function deleteUsers(params) {
 export function updateUser(uid, data) {
   return request({
     url: `/user/${uid}`,
-    method: 'patch',
+    method: 'put',
     data
   })
 }
