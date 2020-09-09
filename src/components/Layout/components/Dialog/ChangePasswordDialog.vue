@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {updateUser} from '@/api/users/users'
+  import {changeSelfPassword} from '@/api/auth/user'
 
   export default {
     name: "ChangePasswordDialog",
@@ -60,7 +60,7 @@
             {validator: validatePass, trigger: 'blur'}
           ],
           checkPassword: [
-            {validator: validatePass2, trigger: 'blur'}
+            {validator: validatePass2, trigger: 'change'}
           ],
         }
       }
@@ -85,16 +85,17 @@
         this.dialog.visible = false;
       },
       updatePassword() {
-        this.$refs['form'].validate((valid) => {
+        this.$refs['form'].validate(async (valid) => {
           if (!valid) return false;
           const params = {
             password: this.form.password
           };
-          updateUser(this.user_id, params).then(() => {
-            this.hideChangePasswordDialog();
-            this.$message.success('修改密码成功,请重新登录');
-            this.$emit('logout')
-          })
+          await changeSelfPassword(params);
+          this.hideChangePasswordDialog();
+          this.$message.success('修改密码成功,请重新登录');
+
+          await this.$store.dispatch('user/fedLogOut');
+          this.$router.push({path: '/login'}).catch()
         })
       }
     }

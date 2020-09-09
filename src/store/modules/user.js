@@ -1,4 +1,4 @@
-import {login, getUserInfo, logout} from '@/api/auth/login'
+import {user, getUserInfo, logout} from '@/api/auth/user'
 import {getToken, removeToken, setToken} from '@/utils/auth'
 
 const state = {
@@ -38,7 +38,7 @@ const actions = {
     const password = userInfo.password.trim();
 
     return new Promise((resolve, reject) => {
-      login(username, password).then(response => {
+      user(username, password).then(response => {
         setToken(response.token);
         commit('SET_TOKEN', response.token);
 

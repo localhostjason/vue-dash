@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <change-password-dialog ref="changePassword" @logout="logout"></change-password-dialog>
+    <change-password-dialog ref="changePassword"></change-password-dialog>
   </div>
 </template>
 

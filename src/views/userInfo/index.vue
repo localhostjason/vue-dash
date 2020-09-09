@@ -27,12 +27,9 @@
 
 <script>
   import PanelTitle from '@/components/PanelTitle/PanelTitle'
-  import {updateUser} from '@/api/users/users'
-  import {getUserInfo} from '@/api/auth/login'
+  import {getUserInfo, updateSelfUserInfo} from '@/api/auth/user'
   import _ from 'lodash'
   import waves from '@/directive/waves'
-
-  import {getEnumName} from '@/utils'
 
   export default {
     name: "index",
@@ -70,7 +67,7 @@
 
 
       saveUserInfo() {
-        updateUser(this.userInfo.id, this.baseForm).then(response => {
+        updateSelfUserInfo(this.baseForm).then(response => {
           this.$message.success('修改个人信息成功')
         })
       }

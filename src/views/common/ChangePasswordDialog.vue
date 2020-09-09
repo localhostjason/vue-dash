@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import {updateUserInfo} from '@/api/auth/login'
+  import {updateUserInfo} from '@/api/auth/user'
 
   export default {
     name: "ChangePasswordDialog",

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function login(username, password) {
+export function user(username, password) {
   const data = {
     username,
     password
@@ -16,6 +16,22 @@ export function getUserInfo() {
   return request({
     url: `/user/info`,
     method: 'get',
+  })
+}
+
+export function updateSelfUserInfo(data) {
+  return request({
+    url: `/user/info/update`,
+    method: 'put',
+    data
+  })
+}
+
+export function changeSelfPassword(data) {
+  return request({
+    url: `/user/info/change_password`,
+    method: 'put',
+    data
   })
 }
 
