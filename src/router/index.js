@@ -14,7 +14,7 @@ import Layout from '@/components/Layout'
 
 /* Router Modules */
 import userRouter from './modules/user'
-
+import hideRouter from './hide'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -44,6 +44,24 @@ import userRouter from './modules/user'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  ...hideRouter,
+  {
+    path: '',
+    component: Layout,
+    redirect: 'dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: 'Dashboard',
+        meta: {
+          title: '概览',
+          icon: 'home',
+          affix: true
+        }
+      }
+    ]
+  },
   {
     path: '/redirect',
     component: Layout,
@@ -80,28 +98,10 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: {
-          title: '概览',
-          icon: 'home',
-          affix: true
-        }
-      }
-    ]
-  },
-  {
     path: '*',
     redirect: '/404',
     hidden: true
   },
-  ...userRouter,
 ];
 
 const createRouter = () => new Router({

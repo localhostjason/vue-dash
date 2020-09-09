@@ -1,21 +1,19 @@
 import Layout from '@/components/Layout'
 
-const userRouter = [{
+const userRouter = {
   path: '/user',
   component: Layout,
-  hidden: true,
   children: [
     {
-      path: 'info',
-      component: () => import('@/views/userInfo'),
-      name: 'SelfUserInfo',
+      path: 'list',
+      component: () => import('@/views/user'),
+      name: 'User',
       meta: {
         title: '用户信息',
-        icon: 'cloud-download',
+        icon: 'list',
       }
     }
   ]
-}
-];
+};
 
 export default userRouter
