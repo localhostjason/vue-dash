@@ -90,7 +90,7 @@
 
             this.$notify.success({
               title: '登录成功',
-              message: '欢迎您进入瑞士餐厅管理系统',
+              message: '欢迎您进入iFlow2管理系统',
             });
           } catch (e) {
             this.loading = false;

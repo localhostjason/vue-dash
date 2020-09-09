@@ -37,6 +37,7 @@ router.onError((error) => {
   }
 });
 
+
 new Vue({
   el: '#app',
   router,

@@ -85,7 +85,7 @@ service.interceptors.response.use(
 
     if (status === 401) {
       store.dispatch('user/fedLogOut').then(() => {
-        router.push({path: '/'})
+        router.push({path: '/'});
       });
     }
 

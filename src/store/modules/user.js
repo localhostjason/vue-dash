@@ -45,33 +45,32 @@ const actions = {
 
   getUserInfo({commit, state}) {
     return new Promise(async (resolve, reject) => {
-      if (!state.token) return;
-      const response = await getUserInfo(state.token);
+      try {
+        const response = await getUserInfo();
+        if (!response) reject('error');
+        if (!response.role) reject('权限不存在');
 
-      const username = response.username;
-      if (username !== 'admin' && !response.role) {
-        removeToken();
-        reject('没有role');
+        commit('SET_USERNAME', response.username);
+        commit('SET_USER_ID', response.id);
+        commit('SET_ROLE', response.role ? response.role.name : null);
+
+        resolve(response)
+      } catch (e) {
+        reject(e)
       }
-      commit('SET_USERNAME', response.username);
-      commit('SET_USER_ID', response.id);
-      commit('SET_ROLE', response.role ? response.role.name : null);
 
-
-      resolve(response)
     })
   },
 
   logout({commit, state}) {
-    return new Promise(resolve => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '');
-        commit('SET_USERNAME', '');
-        commit('SET_USER_ID', '');
-        commit('SET_ROLE', null);
-        removeToken();
-        resolve()
-      })
+    return new Promise(async (resolve, reject) => {
+      await logout(state.token);
+      commit('SET_TOKEN', '');
+      commit('SET_USERNAME', '');
+      commit('SET_USER_ID', '');
+      commit('SET_ROLE', null);
+      removeToken();
+      resolve()
     })
   },
 
