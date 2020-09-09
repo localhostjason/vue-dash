@@ -28,6 +28,7 @@ service.interceptors.request.use(
     return config
   },
   error => {
+    console.log('before_error', error); // for debug
     Promise.reject(error)
   }
 );

@@ -54,20 +54,21 @@
       }
     },
     created() {
-      this.getUserInfo(this.$store.getters.userId);
+      this.getUserInfo();
     },
     methods: {
-      getEnumName,
-      getUserInfo(user_id) {
-        this.getUser(user_id).then(response => {
+      async getUserInfo() {
+        try {
+          const response = await getUserInfo();
           this.userInfo = response;
           this.baseForm = _.pick(response, Object.keys(this.baseForm));
-        })
+        } catch (e) {
+
+        }
+
       },
 
-      async getUser(user_id) {
-        return await getUserInfo(user_id)
-      },
+
       saveUserInfo() {
         updateUser(this.userInfo.id, this.baseForm).then(response => {
           this.$message.success('修改个人信息成功')
