@@ -74,10 +74,15 @@
         this.$store.dispatch('app/toggleSideBar')
       },
       async logout() {
-        await this.$store.dispatch('user/logout');
+        try {
+          await this.$store.dispatch('user/logout');
 
-        this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-        this.$message.success('退出登录成功');
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+          this.$message.success('退出登录成功');
+        } catch (e) {
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+        }
+
       },
       changePassword() {
         this.$refs.changePassword.showChangePasswordDialog();

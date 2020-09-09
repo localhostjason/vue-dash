@@ -27,7 +27,8 @@
 
 <script>
   import PanelTitle from '@/components/PanelTitle/PanelTitle'
-  import {getUserInfo, updateUser} from '@/api/users/users'
+  import {updateUser} from '@/api/users/users'
+  import {getUserInfo} from '@/api/auth/login'
   import _ from 'lodash'
   import waves from '@/directive/waves'
 

@@ -23,6 +23,14 @@ const mutations = {
   },
 };
 
+function removeStore(commit) {
+  commit('SET_TOKEN', '');
+  commit('SET_USERNAME', '');
+  commit('SET_USER_ID', '');
+  commit('SET_ROLE', null);
+  removeToken();
+}
+
 const actions = {
   // user login
   login({commit}, userInfo) {
@@ -62,15 +70,18 @@ const actions = {
     })
   },
 
+
   logout({commit, state}) {
     return new Promise(async (resolve, reject) => {
-      await logout(state.token);
-      commit('SET_TOKEN', '');
-      commit('SET_USERNAME', '');
-      commit('SET_USER_ID', '');
-      commit('SET_ROLE', null);
-      removeToken();
-      resolve()
+      try {
+        await logout(state.token);
+        removeStore(commit);
+        resolve()
+      } catch (e) {
+        removeStore(commit);
+        reject(e)
+      }
+
     })
   },
 
