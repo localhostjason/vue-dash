@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@babel/register": "latest",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "codemirror": "^5.57.0",
     "core-js": "^2.6.11",
     "echarts": "^4.9.0",
