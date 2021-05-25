@@ -31,7 +31,7 @@
           </el-dropdown-menu>
         </el-dropdown>
 
-        <screenfull id="screenfull" class="right-menu-item hover-effect"></screenfull>
+        <screenfull id="screenfull" class="right-menu-item hover-effect" style="margin-right: 10px"></screenfull>
       </div>
     </div>
 
@@ -133,7 +133,7 @@
       .right-menu-item {
         display: inline-block;
         padding: 0 8px;
-        font-size: 14px;
+        font-size: 12px;
         color: #5a5e66;
 
         &.hover-effect {

@@ -4,6 +4,7 @@ const userRouter = {
   path: '/user',
   component: Layout,
   name: "User",
+  redirect: 'list',
   meta: {
     title: '用户信息',
     icon: 'list'
