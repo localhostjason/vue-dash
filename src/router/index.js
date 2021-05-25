@@ -48,7 +48,8 @@ export const constantRoutes = [
     meta: {
       title: '概览',
       icon: 'home',
-      click: true
+      click: true,
+      breadcrumb: false,
     },
     children: [
       {
@@ -57,7 +58,8 @@ export const constantRoutes = [
         name: 'Dashboard',
         meta: {
           title: '概览',
-          icon: 'home'
+          icon: 'home',
+          breadcrumb: false,
         }
       }
     ]
