@@ -1,4 +1,5 @@
 import {asyncRoutes, constantRoutes} from '@/router'
+import {getMenuToken, removeMenuToken, setMenuToken} from "@/utils/auth"
 
 /**
  * 通过meta.roles  判断是否与当前用户权限匹配
@@ -9,7 +10,7 @@ import {asyncRoutes, constantRoutes} from '@/router'
  */
 function hasPermission(routes_map, route) {
   if (route.path) {
-    console.log(routes_map, route.path, routes_map.some(val => val.includes(route.path)));
+    // console.log(routes_map, route.path, routes_map.some(val => val.includes(route.path)));
     // return routes_map.includes(route.path)
     return routes_map.some(val => val.includes(route.path))
   } else {
@@ -46,28 +47,43 @@ export function filterAsyncRoutes(routes, routes_map) {
 const state = {
   routers: [],
   addRouters: [],
+
+  activeMenuOnePath: getMenuToken(),
 };
 
 const mutations = {
   SET_ROUTERS: (state, routes) => {
     state.addRouters = routes;
     state.routers = constantRoutes.concat(routes);
-  }
+  },
+
+  SET_ACTIVE_MENU_ONE: (state, activeMenuOnePath) => {
+    state.activeMenuOnePath = activeMenuOnePath;
+  },
 };
 
 
 const actions = {
   generateRoutes({commit}, data) {
     return new Promise(resolve => {
-      const {routes_map, username} = data;
-      let accessedRoutes = username === 'admin' ?
-        asyncRoutes :
-        filterAsyncRoutes(asyncRoutes, [...routes_map, '*']);
+      // const {routes_map, username} = data;
+      // let accessedRoutes = username === 'admin' ?
+      //   asyncRoutes :
+      //   filterAsyncRoutes(asyncRoutes, [...routes_map, '*']);
 
-      commit('SET_ROUTERS', accessedRoutes);
-      resolve(accessedRoutes)
+      commit('SET_ROUTERS', asyncRoutes);
+      resolve(asyncRoutes)
     })
-  }
+  },
+
+  changeActiveMenuOne({commit}, activeMenuOnePath) {
+    setMenuToken(activeMenuOnePath);
+    commit("SET_ACTIVE_MENU_ONE", activeMenuOnePath);
+  },
+  removeActiveMenuOne({commit}) {
+    removeMenuToken();
+    commit("SET_ACTIVE_MENU_ONE", null);
+  },
 };
 
 

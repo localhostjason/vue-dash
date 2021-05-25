@@ -14,7 +14,6 @@ import Layout from '@/components/Layout'
 
 /* Router Modules */
 import userRouter from './modules/user'
-import hideRouter from './hide'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -30,9 +29,6 @@ import hideRouter from './hide'
     roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
@@ -44,11 +40,16 @@ import hideRouter from './hide'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  ...hideRouter,
   {
     path: '',
     component: Layout,
     redirect: 'dashboard',
+    name: "Dash",
+    meta: {
+      title: '概览',
+      icon: 'home',
+      click: true
+    },
     children: [
       {
         path: 'dashboard',
@@ -56,8 +57,7 @@ export const constantRoutes = [
         name: 'Dashboard',
         meta: {
           title: '概览',
-          icon: 'home',
-          affix: true
+          icon: 'home'
         }
       }
     ]
@@ -88,7 +88,18 @@ export const constantRoutes = [
     path: '/401',
     component: () => import('@/views/errorPage/401'),
     hidden: true
-  }
+  },
+  {
+    path: '/user',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'info',
+        component: () => import('@/views/userInfo'),
+      }
+    ]
+  },
 ];
 
 
@@ -97,6 +108,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  userRouter,
   {
     path: '*',
     redirect: '/404',

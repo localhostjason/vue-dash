@@ -7,11 +7,11 @@ const getters = {
 
   token: state => state.user.token,
   username: state => state.user.username,
-  userId: state => state.user.user_id,
   role: state => state.user.role,
 
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
 
+  activeMenuOnePath: state => state.permission.activeMenuOnePath,
 };
 export default getters

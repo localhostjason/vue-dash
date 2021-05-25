@@ -4,7 +4,6 @@ import {getToken, removeToken, setToken} from '@/utils/auth'
 const state = {
   token: getToken(),
   username: null,
-  user_id: null,
   role: null,
 };
 
@@ -18,15 +17,11 @@ const mutations = {
   SET_ROLE: (state, roles) => {
     state.role = roles
   },
-  SET_USER_ID: (state, user_id) => {
-    state.user_id = user_id
-  },
 };
 
 function removeStore(commit) {
   commit('SET_TOKEN', '');
   commit('SET_USERNAME', '');
-  commit('SET_USER_ID', '');
   commit('SET_ROLE', null);
   removeToken();
 }
@@ -59,8 +54,7 @@ const actions = {
         if (!response.role) reject('权限不存在');
 
         commit('SET_USERNAME', response.username);
-        commit('SET_USER_ID', response.id);
-        commit('SET_ROLE', response.role ? response.role.name : null);
+        commit('SET_ROLE', response.role);
 
         resolve(response)
       } catch (e) {
@@ -89,7 +83,6 @@ const actions = {
   fedLogOut({commit}) {
     commit('SET_TOKEN', '');
     commit('SET_USERNAME', '');
-    commit('SET_USER_ID', '');
     commit('SET_ROLE', null);
     removeToken();
   },

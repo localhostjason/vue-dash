@@ -1,20 +1,28 @@
 <template>
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <sidebar class="sidebar-container"/>
-    <div class="main-container">
-      <navbar/>
-      <tags-view v-if="isShowVisited"/>
-      <app-main/>
-    </div>
+
+
+    <template v-if="settings.layout === 'LR'">
+      <sidebar class="sidebar-container"/>
+      <div class="main-container">
+        <navbar/>
+        <app-main/>
+      </div>
+    </template>
+
+    <template v-if="settings.layout === 'TB'">
+        <navbar-tb/>
+        <app-main/>
+    </template>
   </div>
 </template>
 
 <script>
-  import {Navbar, Sidebar, AppMain, TagsView} from './components'
+  import {Navbar, Sidebar, AppMain, NavbarTb} from './components'
   import ResizeMixin from './mixin/ResizeHandler'
-  import {noShowTagsName} from './tags'
   import {mapState} from 'vuex'
+  import settings from '@/settings'
 
   export default {
     name: 'Layout',
@@ -22,21 +30,13 @@
       Navbar,
       Sidebar,
       AppMain,
-      TagsView
+      NavbarTb,
     },
     mixins: [ResizeMixin],
     data() {
       return {
-        isShowVisited: true
+        settings,
       }
-    },
-    created() {
-      this.getRouterName();
-    },
-    watch: {
-      $route(route, old) {
-        this.isShowVisited = !noShowTagsName.includes(route.name)
-      },
     },
     computed: {
       ...mapState({
@@ -56,10 +56,6 @@
       handleClickOutside() {
         this.$store.dispatch('app/closeSideBar', {withoutAnimation: false})
       },
-      getRouterName() {
-        const router_name = this.$router.history.current.name;
-        this.isShowVisited = !noShowTagsName.includes(router_name)
-      }
     }
   }
 </script>
@@ -77,6 +73,7 @@
     position: relative;
     height: 100%;
     width: 100%;
+
     &.mobile.openSidebar {
       position: fixed;
       top: 0;

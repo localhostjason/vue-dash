@@ -11,9 +11,6 @@
 
           <search id="header-search" class="right-menu-item" style="position: relative;top: -5px;"></search>
 
-          <screenfull id="screenfull" class="right-menu-item hover-effect"></screenfull>
-
-
         </template>
 
         <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -23,16 +20,18 @@
           </div>
           <el-dropdown-menu slot="dropdown">
             <router-link to="/user/info">
-              <el-dropdown-item>个人信息</el-dropdown-item>
+              <el-dropdown-item><span style="padding-left: 15px">个人信息</span></el-dropdown-item>
             </router-link>
             <span @click="changePassword">
-              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item><span style="padding-left: 15px">修改密码</span></el-dropdown-item>
             </span>
             <span @click="logout">
-              <el-dropdown-item divided>退出登录</el-dropdown-item>
+              <el-dropdown-item divided><span style="padding-left: 15px">退出登录</span></el-dropdown-item>
             </span>
           </el-dropdown-menu>
         </el-dropdown>
+
+        <screenfull id="screenfull" class="right-menu-item hover-effect"></screenfull>
       </div>
     </div>
 
@@ -62,7 +61,6 @@
         'username',
         'device',
         'role',
-        'language'
       ])
     },
     data() {
