@@ -19,14 +19,14 @@ export function removeToken() {
 const tokenMenuKey = 'Menu Path';
 
 export function getMenuToken() {
-  return localStorage.getItem(tokenMenuKey)
+  return sessionStorage.getItem(tokenMenuKey)
 }
 
 export function setMenuToken(key) {
-  return localStorage.setItem(tokenMenuKey, key)
+  return sessionStorage.setItem(tokenMenuKey, key)
 }
 
 
 export function removeMenuToken() {
-  localStorage.removeItem(tokenMenuKey);
+  sessionStorage.removeItem(tokenMenuKey);
 }

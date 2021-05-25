@@ -42,11 +42,3 @@ export function updateUserInfo(uid, data) {
     data
   })
 }
-
-
-export function logout() {
-  return request({
-    url: `/user/logout`,
-    method: 'post',
-  })
-}

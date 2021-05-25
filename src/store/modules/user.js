@@ -1,4 +1,4 @@
-import {user, getUserInfo, logout} from '@/api/auth/user'
+import {user, getUserInfo} from '@/api/auth/user'
 import {getToken, removeToken, setToken} from '@/utils/auth'
 
 const state = {
@@ -65,26 +65,13 @@ const actions = {
   },
 
 
-  logout({commit, state}) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        await logout(state.token);
-        removeStore(commit);
-        resolve()
-      } catch (e) {
-        removeStore(commit);
-        reject(e)
-      }
-
-    })
+  logout({commit}) {
+    removeStore(commit);
   },
 
   // get user info fail then logout
   fedLogOut({commit}) {
-    commit('SET_TOKEN', '');
-    commit('SET_USERNAME', '');
-    commit('SET_ROLE', null);
-    removeToken();
+    removeStore(commit);
   },
 };
 

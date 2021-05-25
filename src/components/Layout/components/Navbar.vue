@@ -64,22 +64,18 @@
       ])
     },
     data() {
-      return {
-      }
+      return {}
     },
     methods: {
       toggleSideBar() {
         this.$store.dispatch('app/toggleSideBar')
       },
       async logout() {
-        try {
-          await this.$store.dispatch('user/logout');
+        await this.$store.dispatch('user/logout');
+        await this.$store.dispatch("permission/removeActiveMenuOne");
 
-          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-          this.$message.success('退出登录成功');
-        } catch (e) {
-          this.$router.push(`/login?redirect=${this.$route.fullPath}`);
-        }
+        this.$router.push({path: '/login'});
+        this.$message.success('退出登录成功');
 
       },
       changePassword() {
