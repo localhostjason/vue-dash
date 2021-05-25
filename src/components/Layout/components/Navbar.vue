@@ -7,11 +7,11 @@
       <breadcrumb id="breadcrumb-container" class="breadcrumb-container"></breadcrumb>
 
       <div class="right-menu">
-        <template v-if="device!=='mobile'">
+       <!-- <template v-if="device!=='mobile'">
 
           <search id="header-search" class="right-menu-item" style="position: relative;top: -5px;"></search>
 
-        </template>
+        </template>-->
 
         <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
           <div class="avatar-wrapper">
